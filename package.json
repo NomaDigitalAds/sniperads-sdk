@@ -1,0 +1,29 @@
+{
+  "name": "sniperads-sdk",
+  "version": "0.1.0",
+  "description": "SDK para projetos da SniperAds",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "SniperAds",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.15.27",
+    "typescript": "^5.8.3"
+  }
+}
