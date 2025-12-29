@@ -56,6 +56,7 @@ export function sendFacebookEvent(event_type: FacebookEventType): void {
   const visitor_id = getStorageItem('visitor_id');
   window.fbq('track', event_type, {'external_id': visitor_id});
   console.log('[meta] ' + event_type + ' sent', visitor_id);
+  console.log('[meta] teste');
 }
 
 
