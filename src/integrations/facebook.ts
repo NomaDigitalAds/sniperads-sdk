@@ -15,32 +15,27 @@ declare global {
 export function initFacebookPixel(pixelId: string): void {
   if (window.fbq) return;
 
-  // Define fbq como função stub
-  const fbq = function (...args: any[]) {
-    (fbq as any).callMethod
-      ? (fbq as any).callMethod.apply(fbq, args)
-      : (fbq as any).queue.push(args);
-  };
-
-  (fbq as any).push = fbq;
-  (fbq as any).loaded = true;
-  (fbq as any).version = '2.0';
-  (fbq as any).queue = [];
-
-  window.fbq = fbq;
-  window._fbq = fbq;
-
-  // Carregar o script do Pixel
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://connect.facebook.net/en_US/fbevents.js';
-
-  const firstScript = document.getElementsByTagName('script')[0];
-  firstScript?.parentNode?.insertBefore(script, firstScript);
+  // Código oficial do Facebook Pixel (adaptado)
+  (function(f: any, b: any, e: any, v: any, n: any, t: any, s: any) {
+    if (f.fbq) return;
+    n = f.fbq = function() {
+      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+    };
+    if (!f._fbq) f._fbq = n;
+    n.push = n;
+    n.loaded = true;
+    n.version = '2.0';
+    n.queue = [];
+    t = b.createElement(e);
+    t.async = true;
+    t.src = v;
+    s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s);
+  })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', undefined, undefined, undefined);
 
   // Inicializar com visitor_id
   const visitor_id = getStorageItem('visitor_id');
-  window.fbq('init', pixelId, { external_id: visitor_id });
+  (window.fbq as any)('init', pixelId, { external_id: visitor_id });
   console.log('[meta] Pixel initialized', pixelId);
 }
 
