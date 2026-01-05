@@ -43,10 +43,11 @@ export async function initVisitor(): Promise<void> {
     pushEvent('visitor_finded');
 
     console.log('[DEBUG] visitor created:', json.visitor_id);
+    console.log('[DEBUG] source:', json.source_type);
     
     if (json.source_type) {
       pushEvent(`source_${json.source_type}`);
-      console.log('[DEBUG] source:', json.source_type);
+      console.log('[DEBUG] source event:', json.source_type);
     }
     
     console.log('[sniperads] visitor created:', json.visitor_id);
