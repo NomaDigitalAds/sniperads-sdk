@@ -1,5 +1,7 @@
 import { API_URL, } from '../config';
 import { getStorageItem } from '../utils/utils';
+// @ts-ignore - Arquivo .js sem tipagem
+import { loadFacebookPixel } from './facebook-pixel-loader.js';
 /** -----------------------------------------------------------------
  * Inicializa o Facebook Pixel com o ID fornecido
  * ----------------------------------------------------------------- */
@@ -8,27 +10,8 @@ export function initFacebookPixel(pixelId) {
         console.warn('[meta] Pixel já inicializado');
         return;
     }
-    // Código EXATO do Facebook Pixel oficial (sem TypeScript errors)
-    const f = window;
-    const b = document;
-    const e = 'script';
-    const v = 'https://connect.facebook.net/en_US/fbevents.js';
-    if (f.fbq)
-        return;
-    const n = f.fbq = function () {
-        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-    };
-    if (!f._fbq)
-        f._fbq = n;
-    n.push = n;
-    n.loaded = true;
-    n.version = '2.0';
-    n.queue = [];
-    const t = b.createElement(e);
-    t.async = true;
-    t.src = v;
-    const s = b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t, s);
+    // Carrega o código oficial do Facebook Pixel
+    loadFacebookPixel();
     // Inicializar com visitor_id
     const visitor_id = getStorageItem('visitor_id');
     window.fbq('init', pixelId, { external_id: visitor_id });
