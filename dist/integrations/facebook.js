@@ -4,27 +4,31 @@ import { getStorageItem } from '../utils/utils';
  * Inicializa o Facebook Pixel com o ID fornecido
  * ----------------------------------------------------------------- */
 export function initFacebookPixel(pixelId) {
-    if (window.fbq)
+    if (window.fbq) {
+        console.warn('[meta] Pixel já inicializado');
         return;
-    // Código oficial do Facebook Pixel (adaptado)
-    (function (f, b, e, v, n, t, s) {
-        if (f.fbq)
-            return;
-        n = f.fbq = function () {
-            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-        };
-        if (!f._fbq)
-            f._fbq = n;
-        n.push = n;
-        n.loaded = true;
-        n.version = '2.0';
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = true;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s);
-    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', undefined, undefined, undefined);
+    }
+    // Código EXATO do Facebook Pixel oficial (sem TypeScript errors)
+    const f = window;
+    const b = document;
+    const e = 'script';
+    const v = 'https://connect.facebook.net/en_US/fbevents.js';
+    if (f.fbq)
+        return;
+    const n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+    };
+    if (!f._fbq)
+        f._fbq = n;
+    n.push = n;
+    n.loaded = true;
+    n.version = '2.0';
+    n.queue = [];
+    const t = b.createElement(e);
+    t.async = true;
+    t.src = v;
+    const s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s);
     // Inicializar com visitor_id
     const visitor_id = getStorageItem('visitor_id');
     window.fbq('init', pixelId, { external_id: visitor_id });
