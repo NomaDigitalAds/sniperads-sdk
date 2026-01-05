@@ -1,21 +1,39 @@
 import { API_URL, } from '../config';
 import { getStorageItem } from '../utils/utils';
-// @ts-ignore - Arquivo .js sem tipagem
-import { loadFacebookPixel } from './facebook-pixel-loader.js';
 /** -----------------------------------------------------------------
  * Inicializa o Facebook Pixel com o ID fornecido
  * ----------------------------------------------------------------- */
 export function initFacebookPixel(pixelId) {
+    var _a;
     if (window.fbq) {
         console.warn('[meta] Pixel já inicializado');
         return;
     }
-    // Carrega o código oficial do Facebook Pixel
-    loadFacebookPixel();
+    // Define fbq como função stub
+    const fbq = function (...args) {
+        fbq.callMethod
+            ? fbq.callMethod.apply(fbq, args)
+            : fbq.queue.push(args);
+    };
+    fbq.push = fbq;
+    fbq.loaded = true;
+    fbq.version = '2.0';
+    fbq.queue = [];
+    window.fbq = fbq;
+    window._fbq = fbq;
+    // Carregar o script do Pixel
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+    const firstScript = document.getElementsByTagName('script')[0];
+    (_a = firstScript === null || firstScript === void 0 ? void 0 : firstScript.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(script, firstScript);
     // Inicializar com visitor_id
     const visitor_id = getStorageItem('visitor_id');
-    window.fbq('init', pixelId, { external_id: visitor_id });
-    console.log('[meta] Pixel initialized', pixelId);
+    console.log('[meta] visitor_id recuperado:', visitor_id);
+    if (window.fbq) {
+        window.fbq('init', pixelId, { external_id: visitor_id });
+        console.log('[meta] Pixel initialized', pixelId);
+    }
 }
 /** -----------------------------------------------------------------
  * Envia evento Facebook Pixel
