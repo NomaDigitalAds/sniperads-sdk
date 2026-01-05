@@ -5,10 +5,6 @@ import { getStorageItem } from '../utils/utils';
  * ----------------------------------------------------------------- */
 export function initFacebookPixel(pixelId) {
     var _a;
-    if (window.fbq) {
-        console.warn('[meta] Pixel já inicializado');
-        return;
-    }
     // Define fbq como função stub
     const fbq = function (...args) {
         fbq.callMethod

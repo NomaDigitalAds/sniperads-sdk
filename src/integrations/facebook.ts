@@ -14,10 +14,6 @@ declare global {
  * Inicializa o Facebook Pixel com o ID fornecido
  * ----------------------------------------------------------------- */
 export function initFacebookPixel(pixelId: string): void {
-  if (window.fbq) {
-    console.warn('[meta] Pixel já inicializado');
-    return;
-  }
 
   // Define fbq como função stub
   const fbq: any = function (...args: any[]) {
