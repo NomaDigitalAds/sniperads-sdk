@@ -28,6 +28,7 @@ export function initFacebookPixel(pixelId) {
     // Inicializar com visitor_id
     const visitor_id = getStorageItem('visitor_id');
     window.fbq('init', pixelId, { external_id: visitor_id });
+    console.log('[meta] Pixel initialized', pixelId);
 }
 /** -----------------------------------------------------------------
  * Envia evento Facebook Pixel
@@ -40,6 +41,7 @@ export function sendFacebookEvent(event_type) {
     const visitor_id = getStorageItem('visitor_id');
     window.fbq('track', event_type, { 'external_id': visitor_id });
     console.log('[meta] ' + event_type + ' sent', visitor_id);
+    console.log('[meta] teste');
 }
 /** -----------------------------------------------------------------
  * Atualiza CLIDs (fbp / fbc) com sistema de polling simplificado
