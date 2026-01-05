@@ -8,14 +8,15 @@ type TrackEventType = 'page_view' | 'vsl_play' | 'vsl_lead' | 'vsl_pitch' | 'ini
  *  ----------------------------------------------------------------- */
 export async function initVisitor(): Promise<void> {
   if (!isBrowser()) return;
-  
+
+  const source = getStorageItem('source');
+  if (source) {
+    pushEvent(`source_${source}`);
+  }
+
   const existing = getStorageItem('visitor_id');
   if (existing) {
     pushEvent('visitor_finded');
-    const source = getStorageItem('source');
-    if (source) {
-      pushEvent(`source_${source}`);
-    }
     return;
   }
 
@@ -35,10 +36,6 @@ export async function initVisitor(): Promise<void> {
     
     pushEvent('visitor_new');
     pushEvent('visitor_finded');
-    
-    if (json.source_type) {
-      pushEvent(`source_${json.source_type}`);
-    }
     
     console.log('[sniperads] visitor created:', json.visitor_id);
   } catch (e) {
