@@ -4,18 +4,15 @@ import { getStorageItem, setStorageItem, pushEvent, isBrowser } from '../utils/u
  *  Cria o visitante
  *  ----------------------------------------------------------------- */
 export async function initVisitor() {
-    if (!isBrowser()) {
-        console.log('[DEBUG] not browser');
+    if (!isBrowser())
         return;
-    }
     const existing = getStorageItem('visitor_id');
     if (existing) {
         pushEvent('visitor_finded');
-        console.log('[DEBUG] visitor found:', existing);
+        console.log('[sniperads] visitor found:', existing);
         const source = getStorageItem('source');
         if (source) {
             pushEvent(`source_${source}`);
-            console.log('[DEBUG] source:', source);
         }
         return;
     }
@@ -31,11 +28,8 @@ export async function initVisitor() {
         setStorageItem('source', json.source_type || '');
         pushEvent('visitor_new');
         pushEvent('visitor_finded');
-        console.log('[DEBUG] visitor created:', json.visitor_id);
-        console.log('[DEBUG] source:', json.source_type);
         if (json.source_type) {
             pushEvent(`source_${json.source_type}`);
-            console.log('[DEBUG] source event:', json.source_type);
         }
         console.log('[sniperads] visitor created:', json.visitor_id);
     }
