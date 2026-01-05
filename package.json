@@ -17,7 +17,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node -e \"require('fs').copyFileSync('src/integrations/facebook-pixel-loader.js', 'dist/integrations/facebook-pixel-loader.js')\"",
     "prepublishOnly": "npm run build"
   },
   "author": "SniperAds",
