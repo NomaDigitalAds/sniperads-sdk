@@ -40,7 +40,6 @@ export function initFacebookPixel(pixelId: string): void {
 
   // Inicializar com visitor_id
   const visitor_id = getStorageItem('visitor_id');
-  console.log('[meta] visitor_id recuperado:', visitor_id);
   if (window.fbq) {
     window.fbq('init', pixelId, { external_id: visitor_id });
     console.log('[meta] Pixel initialized', pixelId);
