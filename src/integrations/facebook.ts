@@ -21,15 +21,15 @@ export function initFacebookPixel(pixelId: string): void {
 
   // Define fbq como função stub
   const fbq: any = function (...args: any[]) {
-    (fbq as any).callMethod
-      ? (fbq as any).callMethod.apply(fbq, args)
-      : (fbq as any).queue.push(args);
+    fbq.callMethod
+      ? fbq.callMethod.apply(fbq, args)
+      : fbq.queue.push(args);
   };
 
-  (fbq as any).push = fbq;
-  (fbq as any).loaded = true;
-  (fbq as any).version = '2.0';
-  (fbq as any).queue = [];
+  fbq.push = fbq;
+  fbq.loaded = true;
+  fbq.version = '2.0';
+  fbq.queue = [];
 
   window.fbq = fbq;
   window._fbq = fbq;
@@ -63,7 +63,6 @@ export function sendFacebookEvent(event_type: FacebookEventType): void {
   const visitor_id = getStorageItem('visitor_id');
   window.fbq('track', event_type, {'external_id': visitor_id});
   console.log('[meta] ' + event_type + ' sent', visitor_id);
-  console.log('[meta] teste');
 }
 
 
